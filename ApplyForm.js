@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {View, TextInput} from "react-native"
-import { Select, SelectItem, Button } from '@ui-kitten/components';
+import { Select, SelectItem, Button, IndexPath } from '@ui-kitten/components';
 
 const SELECT_REGIONS = {
   0: "namer",
@@ -23,6 +23,8 @@ function ApplyForm({ submitForm }){
     email_in: "",
     continent: ""
   });
+
+  const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
 
   function handleSubmit() {
     submitForm(formData);
@@ -50,7 +52,11 @@ function ApplyForm({ submitForm }){
       />
 
       <Select
-        onSelect={index => setFormData(curr => ({ ...curr, continent: SELECT_REGIONS[index] }))}
+        selectedIndex={selectedIndex}
+        onSelect={index => {
+          setFormData(curr => ({ ...curr, continent: SELECT_REGIONS[index] }));
+          setSelectedIndex(index)
+        }}
       >
         <SelectItem title='North America' />
         <SelectItem title='South America' />
