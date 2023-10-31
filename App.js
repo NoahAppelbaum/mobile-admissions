@@ -5,33 +5,35 @@ import { ApplicationProvider, Select, SelectItem, Button } from '@ui-kitten/comp
 import * as eva from '@eva-design/eva';
 
 // TODO: .env -- remember how this works in JS, put API address in there
-const BASE_API = "http://localhost:8000/api"
+const BASE_API = "http://10.0.0.69:8000/api"
 
 
 export default function App() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    location: "" //TODO: default radio?
+    first_name: "",
+    last_name: "",
+    email_in: "",
+    continent: ""
   });
 
   //TODO: for testing:
   const [serverResponse, setServerResponse] = useState("");
 
   const SELECT_REGIONS = {
-    0: "North America",
-    1: "South America",
-    2: "Europe",
+    0: "namer",
+    1: "samer",
+    2: "europe",
     3: "other",
   };
 
   async function handleSubmit() {
-    const response = await fetch(`${BASE_API}/applicants/`, {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {"Content-Type": "application/json"}
-    });
+    // const response = await fetch(`${BASE_API}/applicants/`, {
+    //   method: "POST",
+    //   body: JSON.stringify(formData),
+    //   headers: {"Content-Type": "application/json"}
+    // });
+    const response = await fetch(`${BASE_API}/applicants/`)
+    console.log(response)
     const responseData = await response.json();
     setServerResponse(responseData);
   }
@@ -46,24 +48,24 @@ export default function App() {
 
         <TextInput
         placeholder="First Name"
-        onChangeText={newText => setFormData(curr => ({...curr, firstName:newText}))}
-        value={formData.firstName}
+        onChangeText={newText => setFormData(curr => ({...curr, first_name:newText}))}
+        value={formData.first_name}
         />
 
         <TextInput
         placeholder="Last Name"
-        onChangeText={newText => setFormData(curr => ({...curr, lastName:newText}))}
-        value={formData.lastName}
+        onChangeText={newText => setFormData(curr => ({...curr, last_name:newText}))}
+        value={formData.last_name}
         />
 
         <TextInput
         placeholder="Email Address"
-        onChangeText={newText => setFormData(curr => ({...curr, email:newText}))}
-        value={formData.email}
+        onChangeText={newText => setFormData(curr => ({...curr, email_in:newText}))}
+        value={formData.email_in}
           />
 
         <Select
-            onSelect={index => setFormData(curr => ({ ...curr, location: SELECT_REGIONS[index] }))}
+            onSelect={index => setFormData(curr => ({ ...curr, continent: SELECT_REGIONS[index] }))}
         >
           <SelectItem title='North America' />
           <SelectItem title='South America' />
@@ -76,10 +78,10 @@ export default function App() {
       </View>
       {/* TODO: For testing: */}
       <Text>
-        {serverResponse}
+        {serverResponse.results}
       </Text>
       </View>
-    </ApplicationProvider>
+     </ApplicationProvider>
   );
 }
 
