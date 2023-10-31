@@ -3,10 +3,9 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState } from 'react';
 import { ApplicationProvider, Select, SelectItem, Button } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
+require('dotenv').config();
 
-// TODO: .env -- remember how this works in JS, put API address in there
-const BASE_API = "http://10.0.0.69:8000/api"
-
+const BASE_API = process.env.BASE_API;
 
 export default function App() {
   const [formData, setFormData] = useState({
@@ -27,14 +26,15 @@ export default function App() {
   };
 
   async function handleSubmit() {
-    // const response = await fetch(`${BASE_API}/applicants/`, {
-    //   method: "POST",
-    //   body: JSON.stringify(formData),
-    //   headers: {"Content-Type": "application/json"}
-    // });
-    const response = await fetch(`${BASE_API}/applicants/`)
-    console.log(response)
+    const response = await fetch(`${BASE_API}/applicants/`, {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {"Content-Type": "application/json"}
+    });
+    // const response = await fetch(`${BASE_API}/applicants/`)
+    console.log(response);
     const responseData = await response.json();
+    console.log("response json:", responseData);
     setServerResponse(responseData);
   }
 
@@ -78,7 +78,7 @@ export default function App() {
       </View>
       {/* TODO: For testing: */}
       <Text>
-        {serverResponse.results}
+        {serverResponse.username}
       </Text>
       </View>
      </ApplicationProvider>
