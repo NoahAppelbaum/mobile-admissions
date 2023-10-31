@@ -3,40 +3,50 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState } from 'react';
 import { ApplicationProvider, Select, SelectItem, Button } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
-require('dotenv').config();
+import dotenv from 'dotenv';
+import ApplyForm from './ApplyForm';
+import CareerForm from './CareerForm';
+import CodingExperienceForm from './CodingExperienceForm';
+import GoalsForm from './GoalsForm';
+import ContactForm from './ContactForm';
 
-const BASE_API = process.env.BASE_API;
+
+dotenv.config();
+// const BASE_API = process.env.BASE_API;
+
 
 export default function App() {
-  const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    email_in: "",
-    continent: ""
-  });
+  const [applicantData, setApplicantData] = useState({});
+  const [formStep, setFormStep] = useState(0)
 
-  //TODO: for testing:
-  const [serverResponse, setServerResponse] = useState("");
 
-  const SELECT_REGIONS = {
-    0: "namer",
-    1: "samer",
-    2: "europe",
-    3: "other",
-  };
-
-  async function handleSubmit() {
-    const response = await fetch(`${BASE_API}/applicants/`, {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {"Content-Type": "application/json"}
-    });
-    // const response = await fetch(`${BASE_API}/applicants/`)
-    console.log(response);
-    const responseData = await response.json();
-    console.log("response json:", responseData);
-    setServerResponse(responseData);
+  const ORDERED_FORMS = {
+    0: <ApplyForm submitForm={submitForm} />,
+    1: <CodingExperienceForm submitForm={submitForm} />,
+    2: <CareerForm submitForm={submitForm} />,
+    3: <GoalsForm submitForm={submitForm} />,
+    4: <ContactForm submitForm={submitForm} />,
   }
+
+
+  function submitForm(formData) {
+    setApplicantData(curr => ({ ...curr, ...formData }));
+    setFormStep(curr => curr + 1);
+  }
+
+
+  // async function handleSubmit() {
+  //   const response = await fetch(`${BASE_API}/applicants/`, {
+  //     method: "POST",
+  //     body: JSON.stringify(formData),
+  //     headers: {"Content-Type": "application/json"}
+  //   });
+    // const response = await fetch(`${BASE_API}/applicants/`)
+  //   console.log(response);
+  //   const responseData = await response.json();
+  //   console.log("response json:", responseData);
+  //   setServerResponse(responseData);
+  // }
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
@@ -44,42 +54,8 @@ export default function App() {
       <Text>Welcome to Rithm Application. So glad. To apply.</Text>
       <StatusBar style="auto" />
 
-      <View>
+      {ORDERED_FORMS[formStep]}
 
-        <TextInput
-        placeholder="First Name"
-        onChangeText={newText => setFormData(curr => ({...curr, first_name:newText}))}
-        value={formData.first_name}
-        />
-
-        <TextInput
-        placeholder="Last Name"
-        onChangeText={newText => setFormData(curr => ({...curr, last_name:newText}))}
-        value={formData.last_name}
-        />
-
-        <TextInput
-        placeholder="Email Address"
-        onChangeText={newText => setFormData(curr => ({...curr, email_in:newText}))}
-        value={formData.email_in}
-          />
-
-        <Select
-            onSelect={index => setFormData(curr => ({ ...curr, continent: SELECT_REGIONS[index] }))}
-        >
-          <SelectItem title='North America' />
-          <SelectItem title='South America' />
-          <SelectItem title='Europe' />
-          <SelectItem title='other' />
-        </Select>
-
-        <Button onPress={handleSubmit}>Get Started!</Button>
-
-      </View>
-      {/* TODO: For testing: */}
-      <Text>
-        {serverResponse.username}
-      </Text>
       </View>
      </ApplicationProvider>
   );
