@@ -1,8 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState } from 'react';
-import { ApplicationProvider, Select, SelectItem } from '@ui-kitten/components';
+import { ApplicationProvider, Select, SelectItem, Button } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
+
+// TODO: .env -- remember how this works in JS, put API address in there
+const BASE_API = "http://localhost:8000/api"
 
 
 export default function App() {
@@ -13,20 +16,25 @@ export default function App() {
     location: "" //TODO: default radio?
   });
 
-  // function handleChange(evt) {
-  //   const { name, value } = evt.target;
-  //   setFormData(curr => ({
-  //     ...curr,
-  //     [name]: value
-  //   }));
-  // }
+  //TODO: for testing:
+  const [serverResponse, setServerResponse] = useState("");
 
-  const SELECT_OBJ = {
+  const SELECT_REGIONS = {
     0: "North America",
     1: "South America",
     2: "Europe",
     3: "other",
   };
+
+  async function handleSubmit() {
+    const response = await fetch(`${BASE_API}/applicants/`, {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {"Content-Type": "application/json"}
+    });
+    const responseData = await response.json();
+    setServerResponse(responseData);
+  }
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
@@ -55,7 +63,7 @@ export default function App() {
           />
 
         <Select
-            onSelect={index => setFormData(curr => ({ ...curr, location: SELECT_OBJ[index] }))}
+            onSelect={index => setFormData(curr => ({ ...curr, location: SELECT_REGIONS[index] }))}
         >
           <SelectItem title='North America' />
           <SelectItem title='South America' />
@@ -63,7 +71,13 @@ export default function App() {
           <SelectItem title='other' />
         </Select>
 
+        <Button onPress={handleSubmit}>Get Started!</Button>
+
       </View>
+      {/* TODO: For testing: */}
+      <Text>
+        {serverResponse}
+      </Text>
       </View>
     </ApplicationProvider>
   );
