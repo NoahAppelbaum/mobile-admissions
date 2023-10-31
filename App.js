@@ -3,17 +3,14 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState } from 'react';
 import { ApplicationProvider, Select, SelectItem, Button } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
-import dotenv from 'dotenv';
 import ApplyForm from './ApplyForm';
 import CareerForm from './CareerForm';
 import CodingExperienceForm from './CodingExperienceForm';
 import GoalsForm from './GoalsForm';
 import ContactForm from './ContactForm';
+import Config from "react-native-config";
 
-
-dotenv.config();
-// const BASE_API = process.env.BASE_API;
-
+const BASE_API = Config.BASE_API;
 
 export default function App() {
   const [applicantData, setApplicantData] = useState({});

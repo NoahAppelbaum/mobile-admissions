@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import {View, TextInput} from "react-native"
 import { Select, SelectItem, Button } from '@ui-kitten/components';
 
 const SELECT_REGIONS = {
