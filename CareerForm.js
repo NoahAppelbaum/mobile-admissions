@@ -18,6 +18,8 @@ WORK_STATUS = {
 
 function CareerForm({submitForm}) {
   const [formData, setFormData] = useState({
+    motivation: "",
+    work_history: "",
     highest_ed_level: "",
     legally_authorized: "",
   })
@@ -29,13 +31,18 @@ function CareerForm({submitForm}) {
   return (
     <View>
       <Input multiline={true} placeholder={"What is your motivation for becomin"+
-      "g a software engineer?"} />
+      "g a software engineer?"}
+        onChangeText={newText => setFormData(curr => ({ ...curr, motivation: newText }))}
+      />
       <Input multiline={true} placeholder={"What has your career path looked l" +
-        "ike so far?"} />
+        "ike so far?"}
+        onChangeText={newText => setFormData(curr => ({ ...curr, work_history: newText }))}
+        />
+
       <Text>What is your highest level of education?</Text>
       <Select onSelect={index => setFormData(curr => ({
         ...curr,
-        EDUCATION: EDUCATION_LEVEL[index]
+        highest_ed_level: EDUCATION[index]
       }))}
        >
         <SelectItem title="High School or Equivalent"/>
