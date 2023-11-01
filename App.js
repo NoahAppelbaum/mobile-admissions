@@ -8,13 +8,13 @@ import CareerForm from './CareerForm';
 import CodingExperienceForm from './CodingExperienceForm';
 import GoalsForm from './GoalsForm';
 import ContactForm from './ContactForm';
-import Config from "react-native-config";
 
-const BASE_API = Config.BASE_API;
+const BASE_API = process.env.EXPO_PUBLIC_BASE_API;
 
 export default function App() {
   const [applicantData, setApplicantData] = useState({});
-  const [formStep, setFormStep] = useState(0)
+  const [formStep, setFormStep] = useState(0);
+  console.log("BASE_API", BASE_API);
 
 
   const ORDERED_FORMS = {
@@ -33,7 +33,7 @@ export default function App() {
 
 
   async function handleSubmit() {
-    const response = await fetch(`${BASE_API}/applicants/`, {
+    const response = await fetch(`http://10.0.0.69:8000/api/applicants/`, {
       method: "POST",
       body: JSON.stringify(applicantData),
       headers: {"Content-Type": "application/json"}
@@ -43,6 +43,8 @@ export default function App() {
     const responseData = await response.json();
   //   console.log("response json:", responseData);
     // setServerResponse(responseData);
+    // const response = await fetch("http://10.0.0.69:8000/api/applicants/");
+    // const responseData = await response.json();
   }
 
   return (
