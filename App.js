@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState } from 'react';
-import { ApplicationProvider, Select, SelectItem, Button } from '@ui-kitten/components';
+import { ApplicationProvider } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import ApplyForm from './ApplyForm';
 import CareerForm from './CareerForm';
@@ -54,8 +54,17 @@ export default function App() {
       {ORDERED_FORMS[formStep]}
 
       </View>
+
+      {/* TODO: FOR DEVELOPMENT: */}
+      <View>
+      <Text>Applicant Data:</Text>
+      {Object.keys(applicantData).map(
+        k => <Text key={k} >{k}: {applicantData[k]}</Text>
+        )}
+      </View>
      </ApplicationProvider>
   );
+
 }
 
 const styles = StyleSheet.create({

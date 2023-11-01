@@ -1,13 +1,13 @@
 import { useState } from "react";
-import {View, TextInput} from "react-native"
+import {View, Text, TextInput} from "react-native"
 import { Select, SelectItem, Button, IndexPath } from '@ui-kitten/components';
 
-const SELECT_REGIONS = {
-  0: "namer",
-  1: "samer",
-  2: "europe",
-  3: "other",
-};
+const CONTINENT_CHOICES = [
+  { title: "North America", value: "namer" },
+  { title: "South America", value: "samer" },
+  { title: "Europe", value: "europe" },
+  { title: "Other", value: "other" },
+];
 
 /**ApplyForm: first form step
  * props:
@@ -25,6 +25,7 @@ function ApplyForm({ submitForm }){
   });
 
   const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
+  // const [selectedIndex, setSelectedIndex] = useState(0);
 
   function handleSubmit() {
     submitForm(formData);
@@ -52,19 +53,22 @@ function ApplyForm({ submitForm }){
       />
 
       <Select
+        value={CONTINENT_CHOICES[selectedIndex-1].title}
         selectedIndex={selectedIndex}
         onSelect={index => {
-          setFormData(curr => ({ ...curr, continent: SELECT_REGIONS[index] }));
+          setFormData(curr => (
+            { ...curr, continent: CONTINENT_CHOICES[index-1].value }
+            ));
           setSelectedIndex(index)
         }}
       >
-        <SelectItem title='North America' />
-        <SelectItem title='South America' />
-        <SelectItem title='Europe' />
-        <SelectItem title='other' />
+        {CONTINENT_CHOICES.map((c => <SelectItem key={c.value} title={c.title} />))}
       </Select>
 
       <Button onPress={handleSubmit}>Get Started!</Button>
+
+      {/* TODO: TESTING */}
+      {Object.keys(formData).map(k => <Text key={k} >{k}: {formData[k]}</Text>)}
     </View>
   );
 }
