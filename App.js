@@ -32,18 +32,18 @@ export default function App() {
   }
 
 
-  // async function handleSubmit() {
-  //   const response = await fetch(`${BASE_API}/applicants/`, {
-  //     method: "POST",
-  //     body: JSON.stringify(formData),
-  //     headers: {"Content-Type": "application/json"}
-  //   });
+  async function handleSubmit() {
+    const response = await fetch(`${BASE_API}/applicants/`, {
+      method: "POST",
+      body: JSON.stringify(applicantData),
+      headers: {"Content-Type": "application/json"}
+    });
     // const response = await fetch(`${BASE_API}/applicants/`)
   //   console.log(response);
-  //   const responseData = await response.json();
+    const responseData = await response.json();
   //   console.log("response json:", responseData);
-  //   setServerResponse(responseData);
-  // }
+    // setServerResponse(responseData);
+  }
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
@@ -64,6 +64,7 @@ export default function App() {
         <Text>
           {formStep}
         </Text>
+        <Button onPress={handleSubmit}>Submit Application</Button>
       </View>
      </ApplicationProvider>
   );
