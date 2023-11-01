@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 import { Select, SelectItem, Button, IndexPath } from '@ui-kitten/components';
 import { useState } from "react";
 
-const EXPERIENCE_LEVEL = [
+const EXPERIENCE_LEVEL_CHOICES = [
   { title: "No Experience", value: "none" },
   { title: "I can create variables and write conditionals", value: "vars" },
   { title: "I'm comfortable writing 'for' loops and working with arrays / objects", value: "loops" },
@@ -12,15 +12,15 @@ const EXPERIENCE_LEVEL = [
   { title: "I have professional software engineering experience", value: "pro" },
 ];
 
-const private_prep_choice = [
+const PRIVATE_PREP_CHOICES = [
   {title: "Yes", value: "Yes"},
   {title: "No", value: "No"},
 ]
 
 function CodingExperienceForm({ submitForm }) {
   const [formData, setFormData] = useState({
-    js_experience: "",
-    private_prep: "",
+    js_experience: EXPERIENCE_LEVEL_CHOICES[0].value,
+    private_prep: PRIVATE_PREP_CHOICES[0].value,
   });
 
   const [selectedIndex, setSelectedIndex] = useState({
@@ -37,26 +37,26 @@ function handleSubmit() {
   return (
     <View>
       <Select
-        value={EXPERIENCE_LEVEL[selectedIndex.experience - 1].title}
+        value={EXPERIENCE_LEVEL_CHOICES[selectedIndex.experience - 1].title}
         selectedIndex={selectedIndex.experience}
         onSelect={index => {
           setFormData(curr => (
-            { ...curr, js_experience: EXPERIENCE_LEVEL[index - 1].value }
+            { ...curr, js_experience: EXPERIENCE_LEVEL_CHOICES[index - 1].value }
           ));
           setSelectedIndex(curr => ({...curr, experience: index}));
         }}
       >
-        {EXPERIENCE_LEVEL.map(c => <SelectItem key={c.value} title={c.title}/>)}
+        {EXPERIENCE_LEVEL_CHOICES.map(c => <SelectItem key={c.value} title={c.title}/>)}
         </Select>
 
       <Text>We have a free 2-Week Prep Course that prepares students for our Full-Time Software Engineering Course.
         Is this something you're interested in chatting about?</Text>
       <Select
-        value={private_prep_choice[selectedIndex.privatePrep - 1].title}
+        value={PRIVATE_PREP_CHOICES[selectedIndex.privatePrep - 1].title}
         selectedIndex={selectedIndex.privatePrep}
         onSelect={index => {
           setFormData(curr => (
-            {...curr, private_prep: private_prep_choice[index - 1].value}
+            {...curr, private_prep: PRIVATE_PREP_CHOICES[index - 1].value}
           ));
           setSelectedIndex(curr => ({...curr, privatePrep: index}));
         }}

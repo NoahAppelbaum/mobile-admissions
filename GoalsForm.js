@@ -1,42 +1,48 @@
 import { Text, View } from "react-native";
-import { Select, SelectItem, Button, Input, InputProps } from '@ui-kitten/components';
+import { Select, SelectItem, Button, Input, IndexPath } from '@ui-kitten/components';
 import { useState } from "react";
 
 //TODO: pull upcoming cohorts from db?
-const COHORT_CHOICES = {
-  0: "r99",
-  1: "r100",
-  2: "r101"
-};
+const COHORT_CHOICES = [
+  { title: "February 2024, Online", value: "r99"},
+  { title: "April 2024, Online", value: "r100"},
+  { title: "June 2024, Online", value: "r101"},
+];
 
-const FOUND_CHOICES = {
-  0: "reddit",
-  1: "search",
-  2: "referral",
-  3: "social",
-  4: "meetups",
-  5: "course-report",
-  6: "switchup",
-  7: "other"
-};
+const FOUND_CHOICES = [
+  { title: "Reddit", value: "reddit" },
+  { title: "Google Search", value: "search" },
+  { title: "Friend", value: "referral" },
+  { title: "Social Media", value: "social" },
+  { title: "Rithm Event", value: "meetups" },
+  { title: "Course Report", value: "course-report" },
+  { title: "SwitchUp", value: "switchup" },
+  { title: "Other", value: "other" }
+];
 
-const PAYMENT_CHOICES = {
-  0: "upfront",
-  1: "loan",
-  2: "isa",
-  3: "hybrid",
-  4: "hybrid-loan",
-  5: "unsure"
-}
+const PAYMENT_CHOICES = [
+  { title: "Upfront payment - 1, 2, or 4 installments", value: "upfront" },
+  { title: "Upfront with Loan", value: "loan" },
+  { title: "Deferred tuition (unavailable in CO and WV)", value: "isa" },
+  { title: "Hybrid - Partial upfront, partial deferred tuition (unavailible in CO and WV)", value: "hybrid" },
+  { title: "Hybrid with Loan - Partial upfront, partial deferred tuition (unavailable in CO and WV)", value: "hybrid-loan" },
+  { title: "I'm unsure", value: "unsure" },
+]
 
 
 function GoalsForm({ submitForm }) {
   const [formData, setFormData] = useState({
-    cohorts: "",
-    learned_about_rithm: "",
+    cohorts: COHORT_CHOICES[0].value,
+    learned_about_rithm: FOUND_CHOICES[0].value,
     why_rithm: "",
     can_you_commit: "",
-    planned_payment_method: ""
+    planned_payment_method: PAYMENT_CHOICES[0].value
+  });
+
+  const [selectedIndex, setSelectedIndex] = useState({
+    cohort: new IndexPath(0),
+    learnedAbout: new IndexPath(0),
+    payment: new IndexPath(0),
   });
 
   function handleSubmit() {
@@ -47,35 +53,32 @@ function GoalsForm({ submitForm }) {
     <View>
 
       <Text>Ideally, when would you like to start our full-time program at Rithm School?</Text>
+      {/* FIXME: this needs to be multi-select. More goes into this. */}
       <Select
-      multiSelect={true}
-      onSelect={index => setFormData(curr => ({
-        ...curr,
-        cohorts: formData.cohorts + COHORT_CHOICES[index]
-      }))}
-      // FIXME: gotta fix this^ -- how does multi-select work, exactly?
-      //    Can we add AND take away with selections?
+        value={COHORT_CHOICES[selectedIndex.cohort - 1].title}
+        selectedIndex={selectedIndex.cohort}
+        onSelect={index => {
+          setFormData(curr => (
+            { ...curr, cohorts: COHORT_CHOICES[index - 1].value }
+          ));
+          setSelectedIndex(curr => ({ ...curr, cohort: index }));
+        }}
       >
-        <SelectItem title="February 2024, Online" />
-        <SelectItem title="April 2024, Online" />
-        <SelectItem title="June 2024, Online" />
+        {COHORT_CHOICES.map(c => <SelectItem key={c.value} title={c.title} />)}
       </Select>
 
       <Text>How did you find out about Rithm School?</Text>
-      <Select onSelect={index => setFormData(curr => ({
-        ...curr,
-        learned_about_rithm: FOUND_CHOICES[index]
-      }))}
+      <Select
+        value={FOUND_CHOICES[selectedIndex.learnedAbout - 1].title}
+        selectedIndex={selectedIndex.learnedAbout}
+        onSelect={index => {
+          setFormData(curr => (
+            { ...curr, learned_about_rithm: FOUND_CHOICES[index - 1].value }
+          ));
+          setSelectedIndex(curr => ({ ...curr, learnedAbout: index }));
+        }}
       >
-        <SelectItem title="Reddit" />
-        <SelectItem title="Google Search" />
-        <SelectItem title="Friend" />
-        <SelectItem title="Social Media" />
-        <SelectItem title="Rithm Event" />
-        <SelectItem title="Course Report" />
-        <SelectItem title="SwitchUp" />
-        <SelectItem title="Other" />
-
+        {FOUND_CHOICES.map(c => <SelectItem key={c.value} title={c.title} />)}
       </Select>
 
       <Input multiline={true} placeholder={"Why are you considering Rithm School?"}
@@ -103,18 +106,17 @@ function GoalsForm({ submitForm }) {
 
       </Select>
 
-      <Select onSelect={index => setFormData(curr => ({
-        ...curr,
-        planned_payment_method: PAYMENT_CHOICES[index]
-      }))}
+      <Select
+        value={PAYMENT_CHOICES[selectedIndex.payment - 1].title}
+        selectedIndex={selectedIndex.payment}
+        onSelect={index => {
+          setFormData(curr => (
+            { ...curr, planned_payment_method: PAYMENT_CHOICES[index - 1].value }
+          ));
+          setSelectedIndex(curr => ({ ...curr, payment: index }));
+        }}
       >
-        <SelectItem title="Upfront payment - 1, 2, or 4 installments" />
-        <SelectItem title="Upfront with Loan" />
-        <SelectItem title="Deferred tuition (unavailable in CO and WV)" />
-        <SelectItem title="Hybrid - Partial upfront, partial deferred tuition (unavailible in CO and WV)" />
-        <SelectItem title="Hybrid with Loan - Partial upfront, partial deferred tuition (unavailable in CO and WV)" />
-        <SelectItem title="I'm unsure" />
-
+        {PAYMENT_CHOICES.map(c => <SelectItem key={c.value} title={c.title} />)}
       </Select>
 
       <Button onPress={handleSubmit}>Next</Button>
