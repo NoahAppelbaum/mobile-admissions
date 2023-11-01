@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState } from 'react';
-import { ApplicationProvider } from '@ui-kitten/components';
+import { ApplicationProvider, Button } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import ApplyForm from './ApplyForm';
 import CareerForm from './CareerForm';
@@ -50,8 +50,8 @@ export default function App() {
     <View style={styles.container}>
       <Text>Welcome to Rithm Application. So glad. To apply.</Text>
       <StatusBar style="auto" />
-
       {ORDERED_FORMS[formStep]}
+        {formStep > 0 ? <Button onPress={() => setFormStep(curr => curr - 1)} >Back</Button> : ""}
 
       </View>
 
@@ -61,6 +61,9 @@ export default function App() {
       {Object.keys(applicantData).map(
         k => <Text key={k} >{k}: {applicantData[k]}</Text>
         )}
+        <Text>
+          {formStep}
+        </Text>
       </View>
      </ApplicationProvider>
   );

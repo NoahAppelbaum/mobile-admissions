@@ -21,7 +21,7 @@ function ApplyForm({ submitForm }){
     first_name: "",
     last_name: "",
     email_in: "",
-    continent: ""
+    continent: CONTINENT_CHOICES[0].value
   });
 
   const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
