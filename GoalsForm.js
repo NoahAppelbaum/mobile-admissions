@@ -106,6 +106,7 @@ function GoalsForm({ submitForm }) {
 
       </Select>
 
+      <Text>How do plan to pay for the program?</Text>
       <Select
         value={PAYMENT_CHOICES[selectedIndex.payment - 1].title}
         selectedIndex={selectedIndex.payment}

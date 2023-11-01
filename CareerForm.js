@@ -60,6 +60,11 @@ function CareerForm({submitForm}) {
         {EDUCATION_CHOICES.map(c => <SelectItem key={c.value} title={c.title} />)}
       </Select>
 
+      <Text>Are you legally authorized to work in the United States?</Text>
+        <Text>(this does not change your likelihood of being accepted into our
+          program, it helps let us know how to best support your potential job
+          search)
+        </Text>
       <Select
         value={WORK_STATUS_CHOICES[selectedIndex.workStatus - 1].title}
         selectedIndex={selectedIndex.workStatus}
@@ -70,11 +75,6 @@ function CareerForm({submitForm}) {
           setSelectedIndex(curr => ({ ...curr, workStatus: index }));
         }}
       >
-      <Text>Are you legally authorized to work in the United States?</Text>
-        <Text>(this does not change your likelihood of being accepted into our
-          program, it helps let us know how to best support your potential job
-          search)
-        </Text>
         <SelectItem title="Yes" />
         <SelectItem title="No" />
       </Select>
