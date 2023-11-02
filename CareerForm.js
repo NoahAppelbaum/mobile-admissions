@@ -52,19 +52,19 @@ function CareerForm({submitForm}) {
   }
 
   return (
-    <View>
-      <Input multiline={true} placeholder={"What is your motivation for becomin"+
+    <View style={styles.container}>
+      <Input style={styles.input} multiline={true} placeholder={"What is your motivation for becomin"+
       "g a software engineer?"}
         onChangeText={newText => setFormData(curr => ({ ...curr, motivation: newText }))}
       />
-      <Input multiline={true} placeholder={"What has your career path looked l" +
+      <Input style={styles.input} multiline={true} placeholder={"What has your career path looked l" +
         "ike so far?"}
         onChangeText={newText => setFormData(curr => ({ ...curr, work_history: newText }))}
         />
 
       <Text>What is your highest level of education?</Text>
 
-      <Select
+      <Select style={styles.input}
         value={EDUCATION_CHOICES[selectedIndex.education - 1].title}
         selectedIndex={selectedIndex.education}
         onSelect={index => {
@@ -82,7 +82,7 @@ function CareerForm({submitForm}) {
           program, it helps let us know how to best support your potential job
           search)
         </Text>
-      <Select
+      <Select style={styles.input}
         value={WORK_STATUS_CHOICES[selectedIndex.workStatus - 1].title}
         selectedIndex={selectedIndex.workStatus}
         onSelect={index => {

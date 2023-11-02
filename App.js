@@ -107,7 +107,7 @@ export default function App() {
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
-    <View style={styles.container}>
+    <View style={{padding: 10, height: "100%"}} >
       <StatusBar style="auto" />
       {ORDERED_FORMS[formStep]}
         {formStep > 0 ? <Pressable style={styles.backButton}
@@ -118,7 +118,7 @@ export default function App() {
       </View>
 
       {/* TODO: FOR DEVELOPMENT: */}
-      <View>
+      {/* <View>
       <Text>Applicant Data:</Text>
       {Object.keys(applicantData).map(
         k => <Text key={k} >{k}: {applicantData[k]}</Text>
@@ -126,11 +126,8 @@ export default function App() {
         <Text>
           {formStep}
         </Text>
-        {/* <Button onPress={handleSubmit}>Submit Application</Button> */}
-      </View>
+      </View> */}
      </ApplicationProvider>
   );
 
 }
-
-

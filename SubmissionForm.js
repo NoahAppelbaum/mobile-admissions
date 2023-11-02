@@ -12,7 +12,7 @@ import styles from "./Style";
  */
 function SubmissionForm({handleSubmit, applicantData}) {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Ensure your information is correct:</Text>
       {Object.keys(applicantData).map(
         k => <Text key={k} >{k}: {applicantData[k]}</Text>

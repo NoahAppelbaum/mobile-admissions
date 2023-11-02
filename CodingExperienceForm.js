@@ -50,8 +50,10 @@ function handleSubmit() {
 
 
   return (
-    <View>
-      <Select
+    <View style={styles.container}>
+      <Text>How would you describe your Javascript experience level?</Text>
+
+      <Select style={styles.input}
         value={EXPERIENCE_LEVEL_CHOICES[selectedIndex.experience - 1].title}
         selectedIndex={selectedIndex.experience}
         onSelect={index => {
@@ -66,7 +68,7 @@ function handleSubmit() {
 
       <Text>We have a free 2-Week Prep Course that prepares students for our Full-Time Software Engineering Course.
         Is this something you're interested in chatting about?</Text>
-      <Select
+      <Select style={styles.input}
         value={PRIVATE_PREP_CHOICES[selectedIndex.privatePrep - 1].title}
         selectedIndex={selectedIndex.privatePrep}
         onSelect={index => {

@@ -49,22 +49,22 @@ function ContactForm({ submitForm }) {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
 
-      <TextInput
+      <Text>Must be in the format of YYYY-MM-DD</Text>
+      <TextInput style={styles.input}
         placeholder="What is your date of birth?"
         onChangeText={newText => formatBirthdate(newText)}
         value={formData.birthdate}
       />
-      <Text>Must be in the format of YYYY-MM-DD</Text>
 
-      <TextInput
+      <TextInput style={styles.input}
         placeholder="What is your phone number?"
         onChangeText={newText => setFormData(curr => ({ ...curr, phone: newText }))}
         value={formData.phone}
       />
 
-      <TextInput
+      <TextInput style={styles.input}
         placeholder="Your LinkedIn Profile"
         onChangeText={newText => setFormData(curr => ({ ...curr, linked_in: newText }))}
         value={formData.linked_in}

@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text, View, } from "react-native";
 import { Select, SelectItem, Button, Input, IndexPath } from '@ui-kitten/components';
 import { useState } from "react";
 import styles from "./Style";
@@ -8,6 +8,11 @@ const COHORT_CHOICES = [
   { title: "February 2024, Online", value: "r99"},
   { title: "April 2024, Online", value: "r100"},
   { title: "June 2024, Online", value: "r101"},
+];
+
+const COMMIT_CHOICES = [
+  { title: "Yes", value: "Yes"},
+  { title: "No", value: "No"},
 ];
 
 const FOUND_CHOICES = [
@@ -51,7 +56,7 @@ function GoalsForm({ submitForm }) {
     cohorts: COHORT_CHOICES[0].value,
     learned_about_rithm: FOUND_CHOICES[0].value,
     why_rithm: "",
-    can_you_commit: "",
+    can_you_commit: COMMIT_CHOICES[0].value,
     planned_payment_method: PAYMENT_CHOICES[0].value
   });
 
@@ -59,6 +64,7 @@ function GoalsForm({ submitForm }) {
     cohort: new IndexPath(0),
     learnedAbout: new IndexPath(0),
     payment: new IndexPath(0),
+    commit: new IndexPath(0),
   });
 
   function handleSubmit() {
@@ -66,11 +72,11 @@ function GoalsForm({ submitForm }) {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
 
       <Text>Ideally, when would you like to start our full-time program at Rithm School?</Text>
-      {/* FIXME: this needs to be multi-select. More goes into this. */}
-      <Select
+      {/* fixme: this needs to be multi-select. More goes into this. */}
+      <Select style={styles.input}
         value={COHORT_CHOICES[selectedIndex.cohort - 1].title}
         selectedIndex={selectedIndex.cohort}
         onSelect={index => {
@@ -84,7 +90,7 @@ function GoalsForm({ submitForm }) {
       </Select>
 
       <Text>How did you find out about Rithm School?</Text>
-      <Select
+      <Select style={styles.input}
         value={FOUND_CHOICES[selectedIndex.learnedAbout - 1].title}
         selectedIndex={selectedIndex.learnedAbout}
         onSelect={index => {
@@ -103,19 +109,20 @@ function GoalsForm({ submitForm }) {
 
       <Text>
         All classes are delivered through live lectures, whether we are remote
-         (via Zoom) or in person. As such, we re quire that all applicants live
-          within 4 hours (ahead or behind) of the local time in San Francisco.
-          Our program typically runs from around 9:30 AM to 6 PM Pacific Time,
-          five days a week.
+         (via Zoom) or in person.
         During the dates of this cohort, will you live within 4 hours of Pacific
          Time, and are you able to make a commitment to a full-time program?
       </Text>
 
-      <Select
-        onSelect={index => setFormData(curr => ({
-          ...curr,
-          can_you_commit: (index ? "No" : "Yes")
-        }))}
+      <Select style={styles.input}
+        value={COMMIT_CHOICES[selectedIndex.commit - 1].title}
+        selectedIndex={selectedIndex.commit}
+        onSelect={index => {
+          setFormData(curr => (
+            { ...curr, can_you_commit: COMMIT_CHOICES[index - 1].value }
+          ));
+          setSelectedIndex(curr => ({ ...curr, commit: index }));
+        }}
       >
         <SelectItem title="Yes" />
         <SelectItem title="No" />
@@ -123,7 +130,7 @@ function GoalsForm({ submitForm }) {
       </Select>
 
       <Text>How do plan to pay for the program?</Text>
-      <Select
+      <Select style={styles.input}
         value={PAYMENT_CHOICES[selectedIndex.payment - 1].title}
         selectedIndex={selectedIndex.payment}
         onSelect={index => {

@@ -42,28 +42,39 @@ function ApplyForm({ submitForm }){
   }
 
   return (
-    <View>
+    <View style={styles.container}>
+      <Text style={{
+        fontSize: 40,
+        position: "absolute",
+        top: 0,
+        color: "tomato",
+        fontFamily: "Trebuchet MS",
+
+      }}>This is how you apply to Rithm now:
+        Phones.
+        The Future.
+      </Text>
       <Text>Welcome to Rithm! Get Started Below.</Text>
 
-      <TextInput
+      <TextInput style={styles.input}
         placeholder="First Name"
         onChangeText={newText => setFormData(curr => ({ ...curr, first_name: newText }))}
         value={formData.first_name}
       />
 
-      <TextInput
+      <TextInput style={styles.input}
         placeholder="Last Name"
         onChangeText={newText => setFormData(curr => ({ ...curr, last_name: newText }))}
         value={formData.last_name}
       />
 
-      <TextInput
+      <TextInput style={styles.input}
         placeholder="Email Address"
         onChangeText={newText => setFormData(curr => ({ ...curr, email_in: newText }))}
         value={formData.email_in}
       />
 
-      <Select
+      <Select style={styles.input}
         value={CONTINENT_CHOICES[selectedIndex-1].title}
         selectedIndex={selectedIndex}
         onSelect={index => {
@@ -77,9 +88,6 @@ function ApplyForm({ submitForm }){
       </Select>
 
       <Button style={styles.button} onPress={handleSubmit}>Get Started!</Button>
-
-      {/* TODO: TESTING */}
-      {Object.keys(formData).map(k => <Text key={k} >{k}: {formData[k]}</Text>)}
     </View>
   );
 }
