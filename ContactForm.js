@@ -28,14 +28,35 @@ function ContactForm({ submitForm }) {
     submitForm(formData);
   }
 
+  function formatBirthdate (dateText) {
+    if(dateText.length > 10){
+      return;
+    }
+    // fixme: wonky logic here w/ deletion and dash insertion.
+    if(dateText.length < formData.birthdate.length){
+      setFormData(curr => ({ ...curr, birthdate: dateText }));
+      return;
+    }
+
+    if(dateText.length === 4){
+      dateText += "-";
+    }
+    if(dateText.length === 7){
+      dateText += "-"
+    }
+
+    setFormData(curr => ({ ...curr, birthdate: dateText}));
+  }
+
   return (
     <View>
 
       <TextInput
         placeholder="What is your date of birth?"
-        onChangeText={newText => setFormData(curr => ({ ...curr, birthdate: newText }))}
+        onChangeText={newText => formatBirthdate(newText)}
         value={formData.birthdate}
       />
+      <Text>Must be in the format of YYYY-MM-DD</Text>
 
       <TextInput
         placeholder="What is your phone number?"
