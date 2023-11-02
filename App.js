@@ -1,8 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ApplicationProvider, Button } from '@ui-kitten/components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as eva from '@eva-design/eva';
+
 import ApplyForm from './ApplyForm';
 import CareerForm from './CareerForm';
 import CodingExperienceForm from './CodingExperienceForm';
@@ -14,8 +16,16 @@ const BASE_API = process.env.EXPO_PUBLIC_BASE_API;
 export default function App() {
   const [applicantData, setApplicantData] = useState({});
   const [formStep, setFormStep] = useState(0);
-  console.log("BASE_API", BASE_API);
 
+  useEffect(() => {
+    async function loadSavedData () {
+      const savedData = await getData("applicantData");
+      if (savedData) {
+        applicantData = savedData;
+      }
+    }
+    loadSavedData()
+  }, [])
 
   const ORDERED_FORMS = {
     0: <ApplyForm submitForm={submitForm} />,
@@ -25,13 +35,40 @@ export default function App() {
     4: <ContactForm submitForm={submitForm} />,
   }
 
+  /** Store data in async storage.
+   * Accepts key (string), object (object)
+   */
+  async function storeData (key, object){
+    try {
+      const jsonObject = JSON.stringify(object);
+      await AsyncStorage.setItem(key, jsonObject);
+    } catch (e) {
+    }
+  };
 
+  /** Retrieve data (obj) from async storage, at key (string) */
+  async function getData (key) {
+    try {
+      const storedData = await AsyncStorage.getItem(key);
+      return storedData != null ? await storedData.json() : null;
+    } catch (e) {
+    }
+  };
+
+  /** Submit a set of form answers
+   *
+   * adds the form's data to the overarching applicantData, and updates
+   * applicantData in asyncStorage.
+   *
+   * Steps the formStep state forward to render next form.
+   */
   function submitForm(formData) {
     setApplicantData(curr => ({ ...curr, ...formData }));
+    storeData("applicantData", applicantData);
     setFormStep(curr => curr + 1);
   }
 
-
+  /** Submits applicant data to the SIS /applicant/ api endpoint */
   async function handleSubmit() {
     const response = await fetch(`http://10.0.0.69:8000/api/applicants/`, {
       method: "POST",
