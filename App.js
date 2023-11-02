@@ -82,20 +82,14 @@ export default function App() {
 
   /** Submits applicant data to the SIS /applicant/ api endpoint */
   async function handleSubmit() {
-    const response = await fetch(`http://10.0.0.69:8000/api/applicants/`, {
+    const response = await fetch(`${BASE_API}/applicants/`, {
       method: "POST",
       body: JSON.stringify(applicantData),
       headers: {"Content-Type": "application/json"}
     });
-    // const response = await fetch(`${BASE_API}/applicants/`)
-  //   console.log(response);
     const responseData = await response.json();
     setFormStep(curr => curr + 1);
-  //   console.log("response json:", responseData);
-    // setServerResponse(responseData);
-    // const response = await fetch("http://10.0.0.69:8000/api/applicants/");
-    // const responseData = await response.json();
-  }
+    }
 
   if (formStep > 5) {
     return (
@@ -116,17 +110,6 @@ export default function App() {
           </Text></Pressable> : ""}
 
       </View>
-
-      {/* TODO: FOR DEVELOPMENT: */}
-      {/* <View>
-      <Text>Applicant Data:</Text>
-      {Object.keys(applicantData).map(
-        k => <Text key={k} >{k}: {applicantData[k]}</Text>
-        )}
-        <Text>
-          {formStep}
-        </Text>
-      </View> */}
      </ApplicationProvider>
   );
 
