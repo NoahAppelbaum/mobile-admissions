@@ -1,6 +1,7 @@
 import { Text, View } from "react-native";
 import { Select, SelectItem, Button, Input, IndexPath } from '@ui-kitten/components';
 import { useState } from "react";
+import styles from "./Style";
 
 //TODO: pull upcoming cohorts from db?
 const COHORT_CHOICES = [
@@ -135,7 +136,7 @@ function GoalsForm({ submitForm }) {
         {PAYMENT_CHOICES.map(c => <SelectItem key={c.value} title={c.title} />)}
       </Select>
 
-      <Button onPress={handleSubmit}>Next</Button>
+      <Button style={styles.button} onPress={handleSubmit}>Next</Button>
     </View>
   );
 }

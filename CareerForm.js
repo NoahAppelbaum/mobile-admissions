@@ -1,6 +1,7 @@
 import { Text, View } from "react-native";
 import { Select, SelectItem, Button, Input, IndexPath } from '@ui-kitten/components';
 import { useState } from "react";
+import styles from "./Style";
 
 const EDUCATION_CHOICES = [
   { title: "High School or Equivalent", value: "high-school"},
@@ -94,7 +95,7 @@ function CareerForm({submitForm}) {
         <SelectItem title="Yes" />
         <SelectItem title="No" />
       </Select>
-      <Button onPress={handleSubmit}>Next</Button>
+      <Button style={styles.button} onPress={handleSubmit}>Next</Button>
     </View>
   )
 }

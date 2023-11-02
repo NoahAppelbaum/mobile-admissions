@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Text, TextInput } from "react-native";
 import { Button } from '@ui-kitten/components';
-
+import styles from "./Style";
 
 /** ContactForm: 5th form step
  *
@@ -72,7 +72,7 @@ function ContactForm({ submitForm }) {
       <Text>If you don't have one, just leave it blank</Text>
 
 
-      <Button onPress={handleSubmit}>Get Started!</Button>
+      <Button style={styles.button} onPress={handleSubmit}>Next</Button>
     </View>
   );
 }

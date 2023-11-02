@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {View, Text, TextInput} from "react-native"
 import { Select, SelectItem, Button, IndexPath } from '@ui-kitten/components';
+import styles from "./Style";
 
 const CONTINENT_CHOICES = [
   { title: "North America", value: "namer" },
@@ -42,6 +43,7 @@ function ApplyForm({ submitForm }){
 
   return (
     <View>
+      <Text>Welcome to Rithm! Get Started Below.</Text>
 
       <TextInput
         placeholder="First Name"
@@ -74,7 +76,7 @@ function ApplyForm({ submitForm }){
         {CONTINENT_CHOICES.map((c => <SelectItem key={c.value} title={c.title} />))}
       </Select>
 
-      <Button onPress={handleSubmit}>Get Started!</Button>
+      <Button style={styles.button} onPress={handleSubmit}>Get Started!</Button>
 
       {/* TODO: TESTING */}
       {Object.keys(formData).map(k => <Text key={k} >{k}: {formData[k]}</Text>)}

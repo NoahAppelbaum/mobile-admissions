@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Pressable } from 'react-native';
 import { useState, useEffect } from 'react';
-import { ApplicationProvider, Button } from '@ui-kitten/components';
+import { ApplicationProvider } from '@ui-kitten/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as eva from '@eva-design/eva';
 
@@ -11,6 +11,7 @@ import CodingExperienceForm from './CodingExperienceForm';
 import GoalsForm from './GoalsForm';
 import ContactForm from './ContactForm';
 import SubmissionForm from './SubmissionForm';
+import styles from './Style';
 
 const BASE_API = process.env.EXPO_PUBLIC_BASE_API;
 
@@ -107,10 +108,12 @@ export default function App() {
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
     <View style={styles.container}>
-      <Text>Welcome to Rithm Application. So glad. To apply.</Text>
       <StatusBar style="auto" />
       {ORDERED_FORMS[formStep]}
-        {formStep > 0 ? <Button onPress={() => setFormStep(curr => curr - 1)} >Back</Button> : ""}
+        {formStep > 0 ? <Pressable style={styles.backButton}
+          onPress={() => setFormStep(curr => curr - 1)} ><Text
+            style={{ textAlign: "center", fontWeight: "bold" }}>{"Back"}
+          </Text></Pressable> : ""}
 
       </View>
 
@@ -130,11 +133,4 @@ export default function App() {
 
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+

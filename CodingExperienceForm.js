@@ -1,6 +1,7 @@
 import { Text, View } from "react-native";
 import { Select, SelectItem, Button, IndexPath } from '@ui-kitten/components';
 import { useState } from "react";
+import styles from "./Style";
 
 const EXPERIENCE_LEVEL_CHOICES = [
   { title: "No Experience", value: "none" },
@@ -79,7 +80,7 @@ function handleSubmit() {
         <SelectItem title="Yes"/>
         <SelectItem title="No"/>
       </Select>
-      <Button onPress={handleSubmit}>Next</Button>
+      <Button style={styles.button} onPress={handleSubmit}>Next</Button>
 
     </View>
   )
