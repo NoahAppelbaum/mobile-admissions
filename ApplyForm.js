@@ -9,11 +9,20 @@ const CONTINENT_CHOICES = [
   { title: "Other", value: "other" },
 ];
 
-/**ApplyForm: first form step
- * props:
- * callback for submission
+/** ApplyForm: 1st form step
  *
- * App->ApplyForm
+ * props:
+ *    submitForm() - callback for submission
+ * state:
+ *    formData - {
+ *                first_name,
+ *                last_name,
+ *                email_in,
+ *                continent
+ *                }
+ *    selectedIndex - select dropdown selection
+ *
+ * App -> ApplyForm
  */
 
 function ApplyForm({ submitForm }){

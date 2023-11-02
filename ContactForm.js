@@ -3,8 +3,20 @@ import { View, Text, TextInput } from "react-native";
 import { Button } from '@ui-kitten/components';
 
 
-
-
+/** ContactForm: 5th form step
+ *
+ * props:
+ *    submitForm() - callback for submission
+ * state:
+ *    formData - {
+ *                birthdate,
+ *                phone,
+ *                linked_in
+ *               }
+ *    selectedIndex - select dropdown selection
+ *
+ * App -> ContactForm
+ */
 function ContactForm({ submitForm }) {
   const [formData, setFormData] = useState({
     birthdate: "",

@@ -10,9 +10,19 @@ import CareerForm from './CareerForm';
 import CodingExperienceForm from './CodingExperienceForm';
 import GoalsForm from './GoalsForm';
 import ContactForm from './ContactForm';
+import SubmissionForm from './SubmissionForm';
 
 const BASE_API = process.env.EXPO_PUBLIC_BASE_API;
 
+/** Render all applicant forms
+ * props: none
+ * state:
+ *    applicantData (amalgam of all forms)
+ *    formStep (index that dictates which form to show)
+ *
+ * App -> ApplyForm, CareerForm, CodingExperienceForm,
+ *        GoalsForm, ContactForm, SubmissionForm
+ */
 export default function App() {
   const [applicantData, setApplicantData] = useState({});
   const [formStep, setFormStep] = useState(0);
@@ -33,6 +43,7 @@ export default function App() {
     2: <CareerForm submitForm={submitForm} />,
     3: <GoalsForm submitForm={submitForm} />,
     4: <ContactForm submitForm={submitForm} />,
+    5: <SubmissionForm handleSubmit={handleSubmit} applicantData={applicantData} />,
   }
 
   /** Store data in async storage.
@@ -78,10 +89,19 @@ export default function App() {
     // const response = await fetch(`${BASE_API}/applicants/`)
   //   console.log(response);
     const responseData = await response.json();
+    setFormStep(curr => curr + 1);
   //   console.log("response json:", responseData);
     // setServerResponse(responseData);
     // const response = await fetch("http://10.0.0.69:8000/api/applicants/");
     // const responseData = await response.json();
+  }
+
+  if (formStep > 5) {
+    return (
+      <View>
+      <Text>Congratulations, your application is being processed!</Text>
+    </View>
+    )
   }
 
   return (
@@ -103,7 +123,7 @@ export default function App() {
         <Text>
           {formStep}
         </Text>
-        <Button onPress={handleSubmit}>Submit Application</Button>
+        {/* <Button onPress={handleSubmit}>Submit Application</Button> */}
       </View>
      </ApplicationProvider>
   );

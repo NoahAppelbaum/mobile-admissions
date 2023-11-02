@@ -17,6 +17,20 @@ const PRIVATE_PREP_CHOICES = [
   {title: "No", value: "No"},
 ]
 
+
+/** CodingExperienceForm: 2nd form step
+ *
+ * props:
+ *    submitForm() - callback for submission
+ * state:
+ *    formData - {
+ *                js_experience,
+ *                private_prep
+ *               }
+ *    selectedIndex - select dropdown selection
+ *
+ * App -> CodingExperienceForm
+ */
 function CodingExperienceForm({ submitForm }) {
   const [formData, setFormData] = useState({
     js_experience: EXPERIENCE_LEVEL_CHOICES[0].value,

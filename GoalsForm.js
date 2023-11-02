@@ -29,7 +29,22 @@ const PAYMENT_CHOICES = [
   { title: "I'm unsure", value: "unsure" },
 ]
 
-
+/** GoalsForm: 4th form step
+ *
+ * props:
+ *    submitForm() - callback for submission
+ * state:
+ *    formData - {
+ *                cohorts,
+ *                learned_about_rithm,
+ *                why_rithm,
+ *                can_you_commit,
+ *                planned_payment_method
+ *               }
+ *    selectedIndex - select dropdown selection
+ *
+ * App -> GoalsForm
+ */
 function GoalsForm({ submitForm }) {
   const [formData, setFormData] = useState({
     cohorts: COHORT_CHOICES[0].value,

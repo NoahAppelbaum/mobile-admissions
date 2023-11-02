@@ -16,6 +16,22 @@ const WORK_STATUS_CHOICES = [
   {title: "No", value: "No"},
 ]
 
+
+/** CareerForm: 2nd form step
+ *
+ * props:
+ *    submitForm() - callback for submission
+ * state:
+ *    formData - {
+ *                motivation,
+ *                work_history,
+ *                highest_ed_level,
+ *                legally_authorized
+ *               }
+ *    selectedIndex - select dropdown selection
+ *
+ * App -> CareerForm
+ */
 function CareerForm({submitForm}) {
   const [formData, setFormData] = useState({
     motivation: "",
