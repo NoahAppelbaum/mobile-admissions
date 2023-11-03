@@ -3,7 +3,7 @@ import { Select, SelectItem, Button, Input, IndexPath } from '@ui-kitten/compone
 import { useState } from "react";
 import styles from "./Style";
 
-//TODO: pull upcoming cohorts from db?
+//todo: pull upcoming cohorts from db?
 const COHORT_CHOICES = [
   { title: "February 2024, Online", value: "r99"},
   { title: "April 2024, Online", value: "r100"},

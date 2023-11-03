@@ -35,7 +35,6 @@ function ApplyForm({ submitForm }){
   });
 
   const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
-  // const [selectedIndex, setSelectedIndex] = useState(0);
 
   function handleSubmit() {
     submitForm(formData);
