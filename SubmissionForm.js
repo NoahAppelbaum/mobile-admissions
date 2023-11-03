@@ -17,7 +17,7 @@ function SubmissionForm({handleSubmit, applicantData}) {
       {Object.keys(applicantData).map(
         k => <Text key={k} >{k}: {applicantData[k]}</Text>
       )}
-      <Button style={styles.button}  Press={handleSubmit}>Submit Your Application</Button>
+      <Button style={styles.button}  onPress={handleSubmit}>Submit Your Application</Button>
     </View>
   );
 }
